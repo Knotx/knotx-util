@@ -20,7 +20,6 @@ pool:
 
 variables:
   workspaceDir: knotx-repos
-  targetRepository: knotx-commons
 
 steps:
   - script: |
@@ -67,6 +66,9 @@ steps:
       tasks: 'build-docker'
     displayName: "Build Starter Kit: Docker"
   - script: |
-      $(workspaceDir)/$(targetRepository)/gradlew -p $(workspaceDir)/$(targetRepository) clean test jacocoTestReport
-      bash <(curl -s https://codecov.io/bash) -s $(workspaceDir)/$(targetRepository) -t $(CODECOV_TOKEN)
+      REPO=$(cut -d'/' -f2 <<<$(Build.Repository.Name))
+      if [[ -f "$(workspaceDir)/$REPO/gradlew" ]]; then
+        $(workspaceDir)/$REPO/gradlew -p $(workspaceDir)/$REPO clean test jacocoTestReport
+        bash <(curl -s https://codecov.io/bash) -s $(workspaceDir)/$REPO -t $(CODECOV_TOKEN)
+      fi
     displayName: "Run Codecov inspection"
