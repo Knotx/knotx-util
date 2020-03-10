@@ -29,18 +29,10 @@ steps:
   - task: CmdLine@2
     inputs:
       script: |
-        ORGANIZATION=$(cut -d'/' -f1 <<<$(Build.Repository.Name))
-        echo "Organization: $ORGANIZATION"
-        echo "Build.Repository.Uri: $(Build.Repository.Uri)"
-        echo "Build.SourceBranch: $(Build.SourceBranch)"
-        echo "Build.Repository.Name: $(Build.Repository.Name)"
-        echo "Build.TriggeredBy.ProjectID: $(Build.TriggeredBy.ProjectID)"
-        echo "System.PullRequest.SourceRepositoryURI: $(System.PullRequest.SourceRepositoryURI)"
-        echo "System.PullRequest.SourceBranch: $(System.PullRequest.SourceBranch)"
-        echo "System.PullRequest.TargetBranch: $(System.PullRequest.TargetBranch)"
-        echo "System.TeamProject: $(System.TeamProject)"
-        echo "Build.RequestedFor: $(Build.RequestedFor)"
-        echo "Build.RequestedForId: $(Build.RequestedForId)"
+        PR_NO=$(System.PullRequest.PullRequestNumber)
+        REPO_NAME=$(Build.Repository.Name)
+        LABEL=$(curl https://api.github.com/repos/$REPO_NAME/pulls/$PR_NO | jq --raw-output '.head.label')
+        ORGANIZATION=$(cut -d':' -f1 <<<$LABEL)
         cd knotx-aggregator/development
         if [[ -z "$(System.PullRequest.SourceBranch)" ]] ; then
           ./pull-all.sh -r ../../$(workspaceDir) -b "$(Build.SourceBranchName)" -a -o $ORGANIZATION
