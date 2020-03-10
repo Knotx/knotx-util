@@ -30,6 +30,7 @@ steps:
     inputs:
       script: |
         ORGANIZATION=$(cut -d'/' -f1 <<<$(Build.Repository.Name))
+        echo "Organization: $ORGANIZATION"
         cd knotx-aggregator/development
         if [[ -z "$(System.PullRequest.SourceBranch)" ]] ; then
           ./pull-all.sh -r ../../$(workspaceDir) -b "$(Build.SourceBranchName)" -a -o $ORGANIZATION
