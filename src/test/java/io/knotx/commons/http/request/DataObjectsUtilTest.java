@@ -56,7 +56,7 @@ class DataObjectsUtilTest {
         assertTrue(DataObjectsUtil.equalsMultiMap(multi1, multi2));
 
         multi2.add("Content-Type", "text/html");
-        assertFalse(DataObjectsUtil.equalsMultiMap(multi1, multi2));
+        assertTrue(DataObjectsUtil.equalsMultiMap(multi1, multi2));
     }
 
     @Test
