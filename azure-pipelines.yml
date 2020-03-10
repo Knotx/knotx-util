@@ -39,6 +39,8 @@ steps:
         echo "System.PullRequest.SourceBranch: $(System.PullRequest.SourceBranch)"
         echo "System.PullRequest.TargetBranch: $(System.PullRequest.TargetBranch)"
         echo "System.TeamProject: $(System.TeamProject)"
+        echo "Build.RequestedFor: $(Build.RequestedFor)"
+        echo "Build.RequestedForId: $(Build.RequestedForId)"
         cd knotx-aggregator/development
         if [[ -z "$(System.PullRequest.SourceBranch)" ]] ; then
           ./pull-all.sh -r ../../$(workspaceDir) -b "$(Build.SourceBranchName)" -a -o $ORGANIZATION
