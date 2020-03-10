@@ -31,6 +31,14 @@ steps:
       script: |
         ORGANIZATION=$(cut -d'/' -f1 <<<$(Build.Repository.Name))
         echo "Organization: $ORGANIZATION"
+        echo "Build.Repository.Uri: $(Build.Repository.Uri)"
+        echo "Build.SourceBranch: $(Build.SourceBranch)"
+        echo "Build.Repository.Name: $(Build.Repository.Name)"
+        echo "Build.TriggeredBy.ProjectID: $(Build.TriggeredBy.ProjectID)"
+        echo "System.PullRequest.SourceRepositoryURI: $(System.PullRequest.SourceRepositoryURI)"
+        echo "System.PullRequest.SourceBranch: $(System.PullRequest.SourceBranch)"
+        echo "System.PullRequest.TargetBranch: $(System.PullRequest.TargetBranch)"
+        echo "System.TeamProject: $(System.TeamProject)"
         cd knotx-aggregator/development
         if [[ -z "$(System.PullRequest.SourceBranch)" ]] ; then
           ./pull-all.sh -r ../../$(workspaceDir) -b "$(Build.SourceBranchName)" -a -o $ORGANIZATION
