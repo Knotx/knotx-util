@@ -19,6 +19,7 @@ group = "io.knotx"
 
 plugins {
     id("io.knotx.java-library")
+    id("io.knotx.codegen")
     id("io.knotx.unit-test")
     id("io.knotx.jacoco")
     id("io.knotx.maven-publish")
@@ -33,6 +34,8 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor(platform("io.knotx:knotx-dependencies:${project.version}"))
+
     implementation(platform("io.knotx:knotx-dependencies:${project.version}"))
     implementation(group = "io.vertx", name = "vertx-core")
     implementation(group = "io.vertx", name = "vertx-rx-java2")
@@ -48,10 +51,18 @@ dependencies {
 
 tasks {
     named<RatTask>("rat") {
+        excludes.addAll(listOf("*.yml", "*.md", "**/*.md", "**/build/*", "**/out/*"))
+    }
+    getByName("build").dependsOn("rat")
+}
+
+tasks {
+    named<RatTask>("rat") {
         excludes.addAll(listOf(
                 "*.md", // docs
                 "gradle/wrapper/**", "gradle*", "**/build/**", // Gradle
                 "*.iml", "*.ipr", "*.iws", "*.idea/**", // IDEs
+                "**/generated/*", "**/*.adoc",
                 ".github/*"
         ))
     }
