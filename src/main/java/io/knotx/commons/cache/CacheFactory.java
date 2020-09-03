@@ -15,12 +15,13 @@
  */
 package io.knotx.commons.cache;
 
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 public interface CacheFactory {
 
   String getType();
 
-  Cache create(JsonObject config);
+  Cache create(JsonObject config, Vertx vertx);
 
 }

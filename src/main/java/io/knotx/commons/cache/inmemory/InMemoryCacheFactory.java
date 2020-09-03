@@ -17,6 +17,7 @@ package io.knotx.commons.cache.inmemory;
 
 import io.knotx.commons.cache.Cache;
 import io.knotx.commons.cache.CacheFactory;
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
 public class InMemoryCacheFactory implements CacheFactory {
@@ -27,7 +28,7 @@ public class InMemoryCacheFactory implements CacheFactory {
   }
 
   @Override
-  public Cache create(JsonObject config) {
+  public Cache create(JsonObject config, Vertx vertx) {
     InMemoryCacheOptions options = new InMemoryCacheOptions(config);
     return new InMemoryCache(options.getMaximumSize(), options.getTtlMs());
   }
