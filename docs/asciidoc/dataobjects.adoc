@@ -9,12 +9,10 @@
 |===
 ^|Name | Type ^| Description
 |[[maximumSize]]`@maximumSize`|`Number (long)`|+++
-Sets maximum cache size (number of entries).
- Defaults to 1000.
+Sets maximum cache size (number of entries). Defaults to 1000.
 +++
 |[[ttlMs]]`@ttlMs`|`Number (long)`|+++
-Sets TTL after write in ms.
- Defaults to 5000ms.
+Sets TTL after write in ms. Defaults to 5000ms.
 +++
 |===
 

@@ -40,8 +40,7 @@ public class InMemoryCacheOptions {
   }
 
   /**
-   * Sets TTL after write in ms.
-   * Defaults to 5000ms.
+   * Sets TTL after write in ms. Defaults to 5000ms.
    *
    * @param ttlMs TTL after write in millis
    * @return a reference to this so that API can be used fluently
@@ -56,8 +55,7 @@ public class InMemoryCacheOptions {
   }
 
   /**
-   * Sets maximum cache size (number of entries).
-   * Defaults to 1000.
+   * Sets maximum cache size (number of entries). Defaults to 1000.
    *
    * @param maximumSize maximum size in entries
    * @return a reference to this so that API can be used fluently
