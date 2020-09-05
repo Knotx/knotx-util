@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.knotx.junit5.KnotxExtension;
 import io.reactivex.Observable;
+import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.VertxTestContext;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -38,8 +39,8 @@ class InMemoryCacheTest {
 
   @Test
   @DisplayName("Expect eviction after write when ttl set")
-  void expectEvictionAfterTtl(VertxTestContext testContext) throws InterruptedException {
-    InMemoryCache tested = new InMemoryCache(1000, 150);
+  void expectEvictionAfterTtlWrite(VertxTestContext testContext) throws InterruptedException {
+    InMemoryCache tested = new InMemoryCache(ttlAfterWriteMs(150));
     tested.put(KEY, VALUE);
     TimeUnit.MILLISECONDS.sleep(150);
     tested.get(KEY)
@@ -50,10 +51,27 @@ class InMemoryCacheTest {
   }
 
   @Test
+  @DisplayName("Expect eviction after read when ttl set")
+  void expectEvictionAfterTtlRead(VertxTestContext testContext) {
+    InMemoryCache tested = new InMemoryCache(ttlAfterReadMs(250));
+    tested.put(KEY, VALUE);
+    tested.get(KEY)
+        .subscribe(value -> tested.get(KEY)
+                .delaySubscription(250, TimeUnit.MILLISECONDS)
+                .subscribe(value2 -> testContext
+                        .failNow(new RuntimeException("Expected completion but got: " + value2)),
+                    testContext::failNow,
+                    testContext::completeNow),
+            testContext::failNow,
+            () -> testContext
+                .failNow(new RuntimeException("Expected value not evicted before TTL")));
+  }
+
+  @Test
   @DisplayName("Expect eviction when more elements put than max size")
   void expectEvictionAfterMaximumSizeReached(VertxTestContext testContext) {
     final int MAX_SIZE = 30;
-    InMemoryCache tested = new InMemoryCache(MAX_SIZE, 60000);
+    InMemoryCache tested = new InMemoryCache(limitedSize(MAX_SIZE));
 
     List<Integer> elementsPut = IntStream.rangeClosed(1, 100).boxed().collect(toList());
     elementsPut.forEach(i -> tested.put(KEY + i, VALUE));
@@ -75,9 +93,41 @@ class InMemoryCacheTest {
   @Test
   @DisplayName("Expect null value not accepted by cache")
   void expectNullValueNotAcceptedByCache() {
-    InMemoryCache tested = new InMemoryCache(1000, 5000);
+    InMemoryCache tested = new InMemoryCache(noLimits());
 
     assertThrows(NullPointerException.class, () -> tested.put(KEY, null));
+  }
+
+  private InMemoryCacheOptions limitedSize(long maxSize) {
+    return new InMemoryCacheOptions(new JsonObject())
+        .setMaximumSize(maxSize)
+        .setEnableMaximumSize(true)
+        .setEnableTtlAfterWrite(false)
+        .setEnableTtlAfterRead(false);
+  }
+
+  private InMemoryCacheOptions ttlAfterWriteMs(long ttlAfterWriteMs) {
+    return new InMemoryCacheOptions(new JsonObject())
+        .setEnableMaximumSize(false)
+        .setEnableTtlAfterWrite(true)
+        .setEnableTtlAfterRead(false)
+        .setTtlAfterWriteMs(ttlAfterWriteMs);
+  }
+
+
+  private InMemoryCacheOptions ttlAfterReadMs(long ttlAfterReadMs) {
+    return new InMemoryCacheOptions(new JsonObject())
+        .setEnableMaximumSize(false)
+        .setEnableTtlAfterWrite(false)
+        .setEnableTtlAfterRead(true)
+        .setTtlAfterReadMs(ttlAfterReadMs);
+  }
+
+  private InMemoryCacheOptions noLimits() {
+    return new InMemoryCacheOptions(new JsonObject())
+        .setEnableMaximumSize(false)
+        .setEnableTtlAfterWrite(false)
+        .setEnableTtlAfterRead(false);
   }
 
 }

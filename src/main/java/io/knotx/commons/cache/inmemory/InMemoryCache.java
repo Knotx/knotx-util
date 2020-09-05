@@ -24,11 +24,22 @@ public class InMemoryCache implements Cache {
 
   private final com.google.common.cache.Cache<String, Object> cache;
 
-  public InMemoryCache(long maxSize, long ttlMs) {
-    cache = CacheBuilder.newBuilder()
-        .maximumSize(maxSize)
-        .expireAfterWrite(ttlMs, TimeUnit.MILLISECONDS)
-        .build();
+  public InMemoryCache(InMemoryCacheOptions options) {
+    CacheBuilder builder = CacheBuilder.newBuilder();
+    if (options.isEnableMaximumSize()) {
+      builder.maximumSize(options.getMaximumSize());
+    }
+    if (options.isEnableTtlAfterWrite()) {
+      if (options.getTtlAfterWriteMs() != null) {
+        builder.expireAfterWrite(options.getTtlAfterWriteMs(), TimeUnit.MILLISECONDS);
+      } else {
+        builder.expireAfterAccess(options.getTtl(), TimeUnit.MILLISECONDS);
+      }
+    }
+    if (options.isEnableTtlAfterRead()) {
+      builder.expireAfterAccess(options.getTtlAfterReadMs(), TimeUnit.MILLISECONDS);
+    }
+    cache = builder.build();
   }
 
   @Override

@@ -30,7 +30,7 @@ public class InMemoryCacheFactory implements CacheFactory {
   @Override
   public Cache create(JsonObject config, Vertx vertx) {
     InMemoryCacheOptions options = new InMemoryCacheOptions(config);
-    return new InMemoryCache(options.getMaximumSize(), options.getTtl());
+    return new InMemoryCache(options);
   }
 
 }
