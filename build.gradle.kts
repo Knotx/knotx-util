@@ -45,6 +45,7 @@ dependencies {
     implementation(group = "org.junit.jupiter", name = "junit-jupiter-params")
     implementation(group = "org.junit.jupiter", name = "junit-jupiter-migrationsupport")
 
+    testImplementation("io.knotx:knotx-junit5:${project.version}")
     testImplementation(group = "org.mockito", name = "mockito-core")
     testImplementation(group = "org.mockito", name = "mockito-junit-jupiter")
 }

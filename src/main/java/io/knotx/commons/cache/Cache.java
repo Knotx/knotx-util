@@ -19,8 +19,26 @@ import io.reactivex.Maybe;
 
 public interface Cache {
 
+  /**
+   * Lookup cache for value under the specified key. Returns an empty Maybe if no value was cached
+   * under that key. Please note that null values (if permitted by cache) should be evaluated to an
+   * empty Maybe.
+   * <p>
+   * This method must not throw exceptions.
+   *
+   * @param key lookup key
+   * @return Maybe representing cached value, lack of it or an error
+   */
   Maybe<Object> get(String key);
 
+  /**
+   * Put value into the cache under the specified key.
+   * <p>
+   * This method may throw an exception to signalize that storage was not successful.
+   *
+   * @param key   key under which the provided value will be stored
+   * @param value value to be stored
+   */
   void put(String key, Object value);
 
 }

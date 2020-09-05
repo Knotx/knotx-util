@@ -20,8 +20,19 @@ import io.vertx.core.json.JsonObject;
 
 public interface CacheFactory {
 
+  /**
+   * Type of this factory that will be referenced by clients
+   * @return type of this factory
+   */
   String getType();
 
+  /**
+   * Create a Cache implementation using provided configuration.
+   *
+   * @param config configuration
+   * @param vertx Vert.x instance
+   * @return cache implementation
+   */
   Cache create(JsonObject config, Vertx vertx);
 
 }

@@ -33,12 +33,7 @@ public class InMemoryCache implements Cache {
 
   @Override
   public Maybe<Object> get(String key) {
-    Object cachedValue = cache.getIfPresent(key);
-    if (cachedValue == null) {
-      return Maybe.empty();
-    } else {
-      return Maybe.just(cachedValue);
-    }
+    return Maybe.fromCallable(() -> cache.getIfPresent(key));
   }
 
   @Override
