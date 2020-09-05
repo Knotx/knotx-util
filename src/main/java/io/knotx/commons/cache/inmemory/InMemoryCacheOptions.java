@@ -22,7 +22,7 @@ import java.util.Objects;
 @DataObject(generateConverter = true)
 public class InMemoryCacheOptions {
 
-  private long ttlMs = 5000L;
+  private long ttl = 5000L;
   private long maximumSize = 1000L;
 
   public InMemoryCacheOptions(JsonObject json) {
@@ -35,18 +35,18 @@ public class InMemoryCacheOptions {
     return output;
   }
 
-  public long getTtlMs() {
-    return ttlMs;
+  public long getTtl() {
+    return ttl;
   }
 
   /**
    * Sets TTL after write in ms. Defaults to 5000ms.
    *
-   * @param ttlMs TTL after write in millis
+   * @param ttl TTL after write in millis
    * @return a reference to this so that API can be used fluently
    */
-  public InMemoryCacheOptions setTtlMs(long ttlMs) {
-    this.ttlMs = ttlMs;
+  public InMemoryCacheOptions setTtl(long ttl) {
+    this.ttl = ttl;
     return this;
   }
 
@@ -74,19 +74,19 @@ public class InMemoryCacheOptions {
       return false;
     }
     InMemoryCacheOptions that = (InMemoryCacheOptions) o;
-    return ttlMs == that.ttlMs &&
+    return ttl == that.ttl &&
         maximumSize == that.maximumSize;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ttlMs, maximumSize);
+    return Objects.hash(ttl, maximumSize);
   }
 
   @Override
   public String toString() {
     return "InMemoryCacheOptions{" +
-        "ttlMs=" + ttlMs +
+        "ttlMs=" + ttl +
         ", maximumSize=" + maximumSize +
         '}';
   }
