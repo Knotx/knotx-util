@@ -14,8 +14,8 @@ Sets flag controlling whether cache size should be limited by number of entries.
  <p>
  Defaults to true.
 +++
-|[[enableTtlAfterRead]]`@enableTtlAfterRead`|`Boolean`|+++
-Sets flag controlling whether TTL after read should be configured. When enabled, ttlAfterRead
+|[[enableTtlAfterAccess]]`@enableTtlAfterAccess`|`Boolean`|+++
+Sets flag controlling whether TTL after access should be configured. When enabled, ttlAfterAccess
  option is passed to Cache builder.
  <p>
  Defaults to false.
@@ -27,7 +27,9 @@ Sets flag controlling whether TTL after write should be configured. When enabled
  Defaults to true.
 +++
 |[[maximumSize]]`@maximumSize`|`Number (long)`|+++
-Sets maximum cache size (number of entries). Defaults to 1000.
+Sets maximum cache size (number of entries).
+ <p>
+ Defaults to 1000.
 +++
 |[[ttl]]`@ttl`|`Number (long)`|+++
 Legacy option for setting TTL after write in ms. Applies only when ttlAfterWrite is not set and
@@ -35,13 +37,13 @@ Legacy option for setting TTL after write in ms. Applies only when ttlAfterWrite
  <p>
  Defaults to 5000ms.
 +++
-|[[ttlAfterReadMs]]`@ttlAfterReadMs`|`Number (long)`|+++
-TTL after read in millis. Applies only when enableTtlAfterRead is set to true.
+|[[ttlAfterAccessMs]]`@ttlAfterAccessMs`|`Number (long)`|+++
+TTL after access in millis. Applies only when enableTtlAfterAccess is set to true.
  <p>
  Defaults to 5000ms.
 +++
 |[[ttlAfterWriteMs]]`@ttlAfterWriteMs`|`Number (Long)`|+++
-TTL after read in millis. Applies only when enableTtlAfterWrite is set to true.
+TTL after write in millis. Applies only when enableTtlAfterWrite is set to true.
  <p>
  Not set by default.
 +++

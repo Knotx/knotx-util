@@ -103,14 +103,14 @@ class InMemoryCacheTest {
         .setMaximumSize(maxSize)
         .setEnableMaximumSize(true)
         .setEnableTtlAfterWrite(false)
-        .setEnableTtlAfterRead(false);
+        .setEnableTtlAfterAccess(false);
   }
 
   private InMemoryCacheOptions ttlAfterWriteMs(long ttlAfterWriteMs) {
     return new InMemoryCacheOptions(new JsonObject())
         .setEnableMaximumSize(false)
         .setEnableTtlAfterWrite(true)
-        .setEnableTtlAfterRead(false)
+        .setEnableTtlAfterAccess(false)
         .setTtlAfterWriteMs(ttlAfterWriteMs);
   }
 
@@ -119,15 +119,15 @@ class InMemoryCacheTest {
     return new InMemoryCacheOptions(new JsonObject())
         .setEnableMaximumSize(false)
         .setEnableTtlAfterWrite(false)
-        .setEnableTtlAfterRead(true)
-        .setTtlAfterReadMs(ttlAfterReadMs);
+        .setEnableTtlAfterAccess(true)
+        .setTtlAfterAccessMs(ttlAfterReadMs);
   }
 
   private InMemoryCacheOptions noLimits() {
     return new InMemoryCacheOptions(new JsonObject())
         .setEnableMaximumSize(false)
         .setEnableTtlAfterWrite(false)
-        .setEnableTtlAfterRead(false);
+        .setEnableTtlAfterAccess(false);
   }
 
 }

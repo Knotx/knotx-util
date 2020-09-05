@@ -24,9 +24,9 @@ public class InMemoryCacheOptions {
 
   private boolean enableMaximumSize = true;
   private boolean enableTtlAfterWrite = true;
-  private boolean enableTtlAfterRead = true;
+  private boolean enableTtlAfterAccess = false;
   private long ttl = 5000L;
-  private long ttlAfterReadMs = 5000L;
+  private long ttlAfterAccessMs = 5000L;
   private Long ttlAfterWriteMs;
   private long maximumSize = 1000L;
 
@@ -76,21 +76,21 @@ public class InMemoryCacheOptions {
     return this;
   }
 
-  public boolean isEnableTtlAfterRead() {
-    return enableTtlAfterRead;
+  public boolean isEnableTtlAfterAccess() {
+    return enableTtlAfterAccess;
   }
 
   /**
-   * Sets flag controlling whether TTL after read should be configured. When enabled, ttlAfterRead
+   * Sets flag controlling whether TTL after access should be configured. When enabled, ttlAfterAccess
    * option is passed to Cache builder.
    * <p>
    * Defaults to false.
    *
-   * @param enableTtlAfterRead should TTL after read be configured
+   * @param enableTtlAfterAccess should TTL after access be configured
    * @return a reference to this so that API can be used fluently
    */
-  public InMemoryCacheOptions setEnableTtlAfterRead(boolean enableTtlAfterRead) {
-    this.enableTtlAfterRead = enableTtlAfterRead;
+  public InMemoryCacheOptions setEnableTtlAfterAccess(boolean enableTtlAfterAccess) {
+    this.enableTtlAfterAccess = enableTtlAfterAccess;
     return this;
   }
 
@@ -113,20 +113,20 @@ public class InMemoryCacheOptions {
     return this;
   }
 
-  public long getTtlAfterReadMs() {
-    return ttlAfterReadMs;
+  public long getTtlAfterAccessMs() {
+    return ttlAfterAccessMs;
   }
 
   /**
-   * TTL after read in millis. Applies only when enableTtlAfterRead is set to true.
+   * TTL after access in millis. Applies only when enableTtlAfterAccess is set to true.
    * <p>
    * Defaults to 5000ms.
    *
-   * @param ttlAfterReadMs TTL after read in millis
+   * @param ttlAfterAccessMs TTL after access in millis
    * @return a reference to this so that API can be used fluently
    */
-  public InMemoryCacheOptions setTtlAfterReadMs(long ttlAfterReadMs) {
-    this.ttlAfterReadMs = ttlAfterReadMs;
+  public InMemoryCacheOptions setTtlAfterAccessMs(long ttlAfterAccessMs) {
+    this.ttlAfterAccessMs = ttlAfterAccessMs;
     return this;
   }
 
@@ -135,7 +135,7 @@ public class InMemoryCacheOptions {
   }
 
   /**
-   * TTL after read in millis. Applies only when enableTtlAfterWrite is set to true.
+   * TTL after write in millis. Applies only when enableTtlAfterWrite is set to true.
    * <p>
    * Not set by default.
    *
@@ -175,9 +175,9 @@ public class InMemoryCacheOptions {
     InMemoryCacheOptions that = (InMemoryCacheOptions) o;
     return enableMaximumSize == that.enableMaximumSize &&
         enableTtlAfterWrite == that.enableTtlAfterWrite &&
-        enableTtlAfterRead == that.enableTtlAfterRead &&
+        enableTtlAfterAccess == that.enableTtlAfterAccess &&
         ttl == that.ttl &&
-        ttlAfterReadMs == that.ttlAfterReadMs &&
+        ttlAfterAccessMs == that.ttlAfterAccessMs &&
         maximumSize == that.maximumSize &&
         Objects.equals(ttlAfterWriteMs, that.ttlAfterWriteMs);
   }
@@ -185,7 +185,7 @@ public class InMemoryCacheOptions {
   @Override
   public int hashCode() {
     return Objects
-        .hash(enableMaximumSize, enableTtlAfterWrite, enableTtlAfterRead, ttl, ttlAfterReadMs,
+        .hash(enableMaximumSize, enableTtlAfterWrite, enableTtlAfterAccess, ttl, ttlAfterAccessMs,
             ttlAfterWriteMs, maximumSize);
   }
 
@@ -194,9 +194,9 @@ public class InMemoryCacheOptions {
     return "InMemoryCacheOptions{" +
         "enableMaximumSize=" + enableMaximumSize +
         ", enableTtlAfterWrite=" + enableTtlAfterWrite +
-        ", enableTtlAfterRead=" + enableTtlAfterRead +
+        ", enableTtlAfterAccess=" + enableTtlAfterAccess +
         ", ttl=" + ttl +
-        ", ttlAfterReadMs=" + ttlAfterReadMs +
+        ", ttlAfterAccessMs=" + ttlAfterAccessMs +
         ", ttlAfterWriteMs=" + ttlAfterWriteMs +
         ", maximumSize=" + maximumSize +
         '}';

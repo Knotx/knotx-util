@@ -33,11 +33,11 @@ public class InMemoryCache implements Cache {
       if (options.getTtlAfterWriteMs() != null) {
         builder.expireAfterWrite(options.getTtlAfterWriteMs(), TimeUnit.MILLISECONDS);
       } else {
-        builder.expireAfterAccess(options.getTtl(), TimeUnit.MILLISECONDS);
+        builder.expireAfterWrite(options.getTtl(), TimeUnit.MILLISECONDS);
       }
     }
-    if (options.isEnableTtlAfterRead()) {
-      builder.expireAfterAccess(options.getTtlAfterReadMs(), TimeUnit.MILLISECONDS);
+    if (options.isEnableTtlAfterAccess()) {
+      builder.expireAfterAccess(options.getTtlAfterAccessMs(), TimeUnit.MILLISECONDS);
     }
     cache = builder.build();
   }
