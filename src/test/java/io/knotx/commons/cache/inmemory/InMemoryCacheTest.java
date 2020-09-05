@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import io.knotx.junit5.KnotxExtension;
 import io.reactivex.Observable;
 import io.vertx.core.json.JsonObject;
+import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +32,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(KnotxExtension.class)
+@ExtendWith(VertxExtension.class)
 class InMemoryCacheTest {
 
   private static final String KEY = "key";
