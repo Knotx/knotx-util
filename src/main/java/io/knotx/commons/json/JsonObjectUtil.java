@@ -50,7 +50,7 @@ public final class JsonObjectUtil {
 
   private static <T> T getValue(String key, JsonObject parent,
       BiFunction<String, JsonObject, T> func) {
-    JsonObject directParent = getJsonObject(parent, allButLastSelector(key));
+    JsonObject directParent = getInnerJsonObject(parent, allButLastSelector(key));
 
     return func.apply(lastSelector(key), directParent);
   }
@@ -68,7 +68,7 @@ public final class JsonObjectUtil {
         : keyChain;
   }
 
-  private static JsonObject getJsonObject(JsonObject node, List<String> keys) {
+  private static JsonObject getInnerJsonObject(JsonObject node, List<String> keys) {
     for (String key : keys) {
       node = node.getJsonObject(key);
       if (node == null) {
